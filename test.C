@@ -1,9 +1,11 @@
 #include "selectBaseline.cc"
 #include "fillHT.cc"
 #include "analyzer.cc"
+#include "weightProducer.cc"
 
 #include "TString.h"
 #include "TChain.h"
+#include "TFile.h"
 
 #include <cstdio>
 #include <string>
@@ -13,7 +15,7 @@
 
 using namespace std;
 
-TChain* buildChain(TString inputFileList, TString treeName){
+TChain* buildChain(TString inputFileList, TString substr, TString treeName){
 
   string line;
   ifstream inputFile(inputFileList);
@@ -26,6 +28,8 @@ TChain* buildChain(TString inputFileList, TString treeName){
 
     while( getline( inputFile , line ) ){
 
+      if( line.find(substr.Data()) == string::npos ) continue;
+
       sprintf( temp , "root://cmsxrootd.fnal.gov//%s", line.c_str() );
       t->Add( temp );
 
@@ -37,21 +41,16 @@ TChain* buildChain(TString inputFileList, TString treeName){
 
 }
 
-void test( TString fileName ){
+int main(int argc, char** argv){
 
-  cout << "Compiling local classes..." << endl;
-  gROOT->ProcessLine(".L selectBaseline.cc+");
-  gROOT->ProcessLine(".L fillHT.cc+");
-  gROOT->ProcessLine(".L analyzer.cc+");
-
-  TChain* t = buildChain(fileName,"analysisTree");
+  TString sample = argv[1];
+  TChain* t = buildChain("slimFiles.txt",sample,"analysisTree");
   
   dissectingJetsMET *ntuple = new dissectingJetsMET(t);
 
-  fillHT *fill = new fillHT(ntuple);
+  weightProducer *weightProd = new weightProducer(ntuple,sample);
+  fillHT *fill = new fillHT(ntuple,200,100,5000,sample,weightProd);
   selectBaseline *select = new selectBaseline(ntuple);
-
-  //p.runConfig("config.txt");
 
   analyzer a(ntuple);
   a.addProcessor( select );
@@ -60,5 +59,10 @@ void test( TString fileName ){
   a.looper();
 
   fill->histo->Draw();
-  
+
+  TFile* outFile = new TFile("outFile.root","UPDATE");
+  fill->histo->Write();
+  outFile->Close();
+
 }  
+

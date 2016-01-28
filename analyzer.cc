@@ -56,7 +56,7 @@ public :
   };
 
   // see implementation for notes
-  void looper();
+  void looper(int maxEvents=-1);
   // see implementation for notes
   //void runConfig( string inputConfigName );
 
@@ -66,11 +66,13 @@ public :
 // function for looping over events in ntuple
 // each process is called once.  If any of them 
 // return false, the next event is processed. 
-void analyzer::looper(){
+void analyzer::looper(int maxEvents){
 
   int numEvents = ntuple->fChain->GetEntries();
 
   for( int iEvt = 0 ; iEvt < numEvents ; iEvt++ ){
+
+    if( maxEvents != -1 && iEvt > maxEvents ) break;
 
     ntuple->fChain->GetEntry(iEvt);
 
