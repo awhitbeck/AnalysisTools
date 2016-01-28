@@ -60,7 +60,7 @@ int main(int argc, char** argv){
 
   fill->histo->Draw();
 
-  TFile* outFile = new TFile("outFile.root","UPDATE");
+  TFile* outFile = new TFile("outFile_"+sample+".root","UPDATE");
   fill->histo->Write();
   outFile->Close();
 
