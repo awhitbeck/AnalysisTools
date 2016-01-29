@@ -13,10 +13,10 @@ echo "this is a crazy fucking thing!"
 git clone https://github.com/awhitbeck/AnalysisTools.git
 
 cd AnalysisTools
-g++ `root-config --cflags --glibs` test.C -o test.exe
+g++ `root-config --cflags --glibs` genericPlotter.C -o genericPlotter.exe
 ls
 echo "RUNNING ANALYSIS"
-./test.exe $1
+./genericPlotter.exe $1
 ls
 echo "COPYING OUTPUT"
 xrdcp outFile_${1}.root root://cmseos.fnal.gov//store/user/awhitbe1/DissectingJetsPlusMET/analysis/outFile_${1}.root

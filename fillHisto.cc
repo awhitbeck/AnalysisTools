@@ -7,45 +7,52 @@
 #define FILLHISTO
 
 #include "filler.h"
+#include "weightProducer.cc"
 #include <iostream>
 #include <string>
+#include <cassert>
 
-#include <boost/algorithm/string.hpp>
-
+#include "TLeaf.h"
 #include "TString.h"
 
 using namespace std;
 
-class fillhisto : public filler {
+class fillHisto : public filler {
 
 public : 
 
   TString branchname;
+  weightProducer* weightProd;
 
-  fillhisto():filler(0){
+  fillHisto():filler(0){
     histo = new TH1F("test","test",20,500.,1500.);
   };
   
-  fillhisto( dissectingJetsMET* ntuple_ , 
-	  int nBins = 20 , 
-	  float lowEdge = 500. , float highEdge = 1500. , 
+  fillHisto( dissectingJetsMET* ntuple_ , 
+	     int nBins = 20 , 
+	     float lowEdge = 500. , float highEdge = 1500. , 
 	     TString histoname = "default" ,
-	     TString branchname_= "HT" ) : filler(ntuple_)
+	     TString branchname_= "HT" ,
+	     weightProducer* wp = NULL ) : filler(ntuple_)
   {
     
     branchname = branchname_;
+    weightProd = wp;
     histo = new TH1F(branchname+"_"+histoname,branchname+"_"+histoname,nBins,lowEdge,highEdge);
-    
+    if( weightProd != NULL )
+      histo->Sumw2();
+
   };
 
-  fillhisto( dissectingJetsMET* ntuple_ , 
-	  std::vector<string> args ) : filler(ntuple_)
+  fillHisto( dissectingJetsMET* ntuple_ , 
+	     std::vector<string> args ,
+	     weightProducer* weightProd = NULL ) : filler(ntuple_)
   {
     
-    if( args.size() == 4 ){
-      fillhisto( ntuple_ , stoi( args[0] ) , stof( args[1] ) , stof( args[2] ) , args[3] );
+    if( args.size() == 5 ){
+      fillHisto( ntuple_ , stoi( args[0] ) , stof( args[1] ) , stof( args[2] ) , args[3] , args[4] , weightProd );
     }else{
-      histo = new TH1F("HT_default","HT_default",20,500.,1500.);
+      assert(0);
     }
     
   };
@@ -54,12 +61,15 @@ public :
 
 };
 
-bool fillhisto::process( ){
+bool fillHisto::process( ){
   
   //cout << "filling HT histo with " << ntuple->HT << endl;
-  
-  histo->Fill(ntuple->fChain->GetLeaf(branchname.Data()->GetValue());
-  
+
+  if( weightProd == NULL )
+    histo->Fill( ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() );
+  else
+    histo->Fill( ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() , weightProd->weight );
+		  
   return true;
   
 };
