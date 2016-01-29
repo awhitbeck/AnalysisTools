@@ -49,7 +49,7 @@ int main(int argc, char** argv){
   dissectingJetsMET *ntuple = new dissectingJetsMET(t);
 
   weightProducer *weightProd = new weightProducer(ntuple,sample);
-  fillHT *fill = new fillHT(ntuple,200,100,5000,sample,weightProd);
+  fillHT *fill = new fillHT(ntuple,200,400,10000,sample,weightProd);
   selectBaseline *select = new selectBaseline(ntuple);
 
   analyzer a(ntuple);

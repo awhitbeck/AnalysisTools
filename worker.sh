@@ -12,12 +12,11 @@ echo "this is a crazy fucking thing!"
 
 git clone https://github.com/awhitbeck/AnalysisTools.git
 
-ls 
-ls AnalysisTools
-
 cd AnalysisTools
 g++ `root-config --cflags --glibs` test.C -o test.exe
-
+ls
+echo "RUNNING ANALYSIS"
 ./test.exe $1
-
-xrdcp outFile_$1.root /eos/uscms/store/user/awhitbe1/outFile_$1.root
+ls
+echo "COPYING OUTPUT"
+xrdcp outFile_${1}.root root://cmseos.fnal.gov//store/user/awhitbe1/DissectingJetsPlusMET/analysis/outFile_${1}.root

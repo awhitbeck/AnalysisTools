@@ -24,7 +24,7 @@ public :
 
     if(ntuple->HT<500. || 
        ntuple->MHT<200. || 
-       ntuple->NJets<4 || 
+       ntuple->NJets<2 || 
        ntuple->NLeptons > 0 ||
        ntuple->dPhi<0.3){
 
