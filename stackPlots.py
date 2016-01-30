@@ -90,7 +90,8 @@ def stackPlots( sampleChoice , inputFile , x ):
             histos[-1].SetFillStyle(2)
             histos[-1].SetMaximum(10000000)
             histos[-1].SetMinimum(1)
-            
+            yields = f.Get(baselineYields+"_"+sample+"_"+samples[sample][i])
+            histos[-1].Scale(1./yields->GetBinContent(yields->GetNbinsX()))
             stack.Add(histos[-1])
 
     can = TCanvas("can","can",500,500)

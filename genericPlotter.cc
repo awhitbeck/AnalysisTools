@@ -52,6 +52,7 @@ int main(int argc, char** argv){
       myFiller->histo->Write();
     }
   }
+  select->histo->Write("baselineYields_"+sample);
   outFile->Close();
 
 }  

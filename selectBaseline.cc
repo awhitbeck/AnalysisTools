@@ -15,26 +15,28 @@ class selectBaseline : public processor {
 
 public : 
 
+  TH1F* histo;
+
   selectBaseline():processor(0){};
-  selectBaseline( dissectingJetsMET *ntuple_ ) : processor(ntuple_){};
+  selectBaseline( dissectingJetsMET *ntuple_ ) : processor(ntuple_){
+    histo = new TH1F("selectBaselineYields","selectBaselineYields",5,0.5,5.5);
+  };
   
   bool process( ) override {
 
-    //cout << "HT: " << ntuple->HT << endl;
+    histo->Fill(0);
+    if( ntuple->HT>500. ) histo->Fill(1);
+    else return false;
+    if( ntuple->MHT>200. ) histo->Fill(2); 
+    else return false;
+    if( ntuple->NJets>=2 ) histo->Fill(3);
+    else return false;
+    if( ntuple->NLeptons <= 0 ) histo->Fill(4);
+    else return false;
+    if( ntuple->dPhi>0.3 ) histo->Fill(5);
+    else return false;
 
-    if(ntuple->HT<500. || 
-       ntuple->MHT<200. || 
-       ntuple->NJets<2 || 
-       ntuple->NLeptons > 0 ||
-       ntuple->dPhi<0.3){
-
-      return false;
-
-    }else{ 
-
-      return true;
-
-    }
+    return true;
 
   };
 
