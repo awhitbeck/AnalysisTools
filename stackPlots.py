@@ -7,10 +7,16 @@ parser.add_option("-s", "--sample", dest="sample", default="znunu",
                   help="sample to analyze")
 parser.add_option("-f", "--file", dest="file", default="HTvalidation.root",
                   help="input root file")
+parser.add_option("-x", dest="x", default="HT",
+                  help="independent variable to be plotted")
 
 (options, args) = parser.parse_args()
 
-f = TFile(options.file)
+sampleColors = { "znunu" : kBlue+1 ,
+                 "ttbar" : kMagenta+1 ,
+                 "Wjets" : kCyan+1 , 
+                 "QCD" : kGreen+1 }
+
 samples = {"znunu" : ["0_600",
                       "600_1200",
                       "1200_2000",
@@ -25,7 +31,8 @@ samples = {"znunu" : ["0_600",
                       "2500_3500",   
                       "3500_4600",   
                       "4600_5700",   
-                      "5700_10000"],
+                      "5700_10000"
+                      ],
            "ttbar" : ["0_600",    	 
                       "600_1200",  	 
                       "1200_1900",   
@@ -42,31 +49,63 @@ samples = {"znunu" : ["0_600",
                     "3300_4300",   
                     "4300_5300",   
                     "5300_6300",   
-                    "6300_100000"]}   
+                    "6300_100000"] }
 
-assert options.sample in samples
+def stackPlots( sampleChoice , inputFile , x ):
 
-stack = THStack("stack","stack")
-histos = [] 
+    #print "sampleChoice:",sampleChoice
+    #print "inputFile:",inputFile
+    #print "x:",x
+    #print "sampleChoice in samples:",(sampleChoice in samples)
+    #print "sampleChoice==all:",(sampleChoice==all)
 
-for i in range( len(samples[options.sample]) ) :
+    assert ( sampleChoice in samples or sampleChoice == "all" )
+    f = TFile(inputFile)
 
-    print "i",i
-    histos.append( f.Get("HT_"+options.sample+"_"+samples[options.sample][i]) )
-    histos[i].SetFillColor(i+1)
-    histos[i].SetLineColor(1)
-    histos[i].SetLineWidth(2)
-    histos[i].SetFillStyle(2)
-    histos[i].SetMaximum(10000000)
-    histos[i].SetMinimum(1)
+    stack = THStack("stack","stack")
+    histos = [] 
+    
+    sampleList = []
+    if sampleChoice == "all" : 
+        sampleList = samples.keys()
+    else : 
+        sampleList = [sampleChoice]
 
-    stack.Add(histos[i])
+    for sample in sampleList : 
+        for i in range( len(samples[sample]) ) :
 
-can = TCanvas("can","can",500,500)
-stack.Draw("histo")
-stack.SetMaximum(10000000)
-stack.SetMinimum(1)
+            print "sanity:",x+"_"+sample+"_"+samples[sample][i]
+            histos.append( f.Get(x+"_"+sample+"_"+samples[sample][i]) )
+            if histos[-1] == None : 
+                print "error retrieving ",x+"_"+sample+"_"+samples[sample][i]
+                continue
+                #assert False
+            print "norm:",histos[-1].Integral()
+            if i < len(samples[sample])  :
+                histos[-1].SetLineColor(sampleColors[sample])
+            else :
+                histos[-1].SetLineColor(1)
+            histos[-1].SetFillColor(sampleColors[sample])
+            histos[-1].SetLineWidth(2)
+            histos[-1].SetFillStyle(2)
+            histos[-1].SetMaximum(10000000)
+            histos[-1].SetMinimum(1)
+            
+            stack.Add(histos[-1])
 
-can.SetLogy()
-can.SaveAs("{0}Stack.png".format(options.sample))
+    can = TCanvas("can","can",500,500)
+    stack.Draw("histo")
+    stack.SetMaximum(10000000)
+    stack.SetMinimum(1)
 
+    if sampleChoice == "all" :
+        can.SaveAs("{0}_allStack.png".format(x))
+        can.SetLogy()
+        can.SaveAs("{0}_allStackLogY.png".format(x))
+    else :
+        can.SaveAs("{0}_{1}Stack.png".format(x,sample))
+        can.SetLogy()
+        can.SaveAs("{0}_{1}StackLogY.png".format(x,sample))
+
+if __name__ == "__main__":
+    stackPlots( options.sample , options.file , options.x )
