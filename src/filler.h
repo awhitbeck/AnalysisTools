@@ -1,7 +1,7 @@
-#ifndef DISSECTINGJETMET
-#define DISSECTINGJETMET
-#include "dissectingJetsMET.cc"
-#endif
+//#ifndef DISSECTINGJETMET
+//#define DISSECTINGJETMET
+//#include "dissectingJetsMET.cc"
+//#endif
 
 #ifndef FILLER
 #define FILLER
@@ -11,15 +11,18 @@
 #include "TFile.h"
 #include "TString.h"
 
-class filler : public processor {
+template <class TreeType> class filler : public processor<TreeType> {
 
  public : 
   
   TH1F* histo;
-  dissectingJetsMET *ntuple ; 
-  
-  filler( dissectingJetsMET* ntuple_ ) : processor(ntuple_) { 
-    ntuple = ntuple_ ;
+  TreeType *ntuple ; 
+
+  filler(){
+    ntuple = 0;
+  };
+  filler( TreeType* ntuple_ ){
+    ntuple = ntuple_;
   };
 
   // purely virtual method to be implement by children

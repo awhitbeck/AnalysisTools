@@ -1,7 +1,7 @@
-#ifndef DISSECTINGJETMET
-#define DISSECTINGJETMET
-#include "dissectingJetsMET.cc"
-#endif
+//#ifndef DISSECTINGJETMET
+//#define DISSECTINGJETMET
+//#include "dissectingJetsMET.cc"
+//#endif
 
 #ifndef SELECTBASELINE
 #define SELECTBASELINE
@@ -11,14 +11,16 @@
 
 using namespace std;
 
-class selectBaseline : public processor {
+template <class TreeType> class selectBaseline : public processor<TreeType> {
 
 public : 
 
   TH1F* histo;
+  TreeType* ntuple;
 
-  selectBaseline():processor(0){};
-  selectBaseline( dissectingJetsMET *ntuple_ ) : processor(ntuple_){
+  selectBaseline(){ ntuple = 0; };
+  selectBaseline( TreeType *ntuple_ ){
+    ntuple = ntuple_;
     histo = new TH1F("selectBaselineYields","selectBaselineYields",5,0.5,5.5);
   };
   

@@ -1,7 +1,7 @@
-#ifndef DISSECTINGJETMET
-#define DISSECTINGJETMET
-#include "dissectingJetsMET.cc"
-#endif
+//#ifndef DISSECTINGJETMET
+//#define DISSECTINGJETMET
+//#include "dissectingJetsMET.cc"
+//#endif
 
 #ifndef WEIGHTPRODUCER
 #define WEIGHTPRODUCER
@@ -17,22 +17,24 @@
 
 using namespace std;
 
-class weightProducer : public processor {
+template <class TreeType> class weightProducer : public processor<TreeType> {
 
 public : 
 
   TString sample;
   double weight;
   double lumi;
-
-  weightProducer():processor(0){
+  TreeType* ntuple;
+  weightProducer(){
+    ntuple = 0;
     sample = "";
     weight = -999.;
   };
 
-  weightProducer( dissectingJetsMET* ntuple_ , 
+  weightProducer( TreeType* ntuple_ , 
 		  TString sample_ = "ttbar" ,
-		  double lumi_ = 10.) : processor(ntuple_){
+		  double lumi_ = 10.){
+    ntuple = ntuple_;
     sample = sample_;
     weight = -999.;
     lumi = lumi_;
@@ -75,14 +77,10 @@ public :
       
   };
 
-  bool process( ) override ;
+  bool process( ) override {
+    return true;
+  };
 
-};
-
-bool weightProducer::process( ){
-  
-  return true;
-  
 };
 
 #endif

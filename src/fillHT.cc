@@ -1,7 +1,7 @@
-#ifndef DISSECTINGJETMET
-#define DISSECTINGJETMET
-#include "dissectingJetsMET.cc"
-#endif
+//#ifndef DISSECTINGJETMET
+//#define DISSECTINGJETMET
+//#include "dissectingJetsMET.cc"
+//#endif
 
 #ifndef FILLHT
 #define FILLHT
@@ -12,13 +12,11 @@
 #include <iostream>
 #include <string>
 
-//#include <boost/algorithm/string.hpp>
-
 #include "TString.h"
 
 using namespace std;
 
-class fillHT : public filler {
+template <class TreeType> class fillHT : public filler<TreeType> {
 
 public : 
 
@@ -28,7 +26,7 @@ public :
     histo = new TH1F("test","test",20,500.,1500.);
   };
   
-  fillHT( dissectingJetsMET* ntuple_ , 
+  fillHT( TreeType* ntuple_ , 
 	  int nBins = 20 , 
 	  float lowEdge = 500. , float highEdge = 1500. , 
 	  TString name = "default" ,
@@ -41,7 +39,7 @@ public :
 
   };
 
-  fillHT( dissectingJetsMET* ntuple_ , 
+  fillHT( TreeType* ntuple_ , 
 	  std::vector<string> args ) : filler(ntuple_)
   {
     

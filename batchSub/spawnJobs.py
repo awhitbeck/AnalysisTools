@@ -8,6 +8,16 @@ parser.add_option("-s", "--sample", dest="sample", default="znunu_0_600",
 
 (options, args) = parser.parse_args()
 
+###############################################
+# I would like to have this script create a 
+# new directory in my eos area every time 
+# a new batch of jobs is submitted.  
+# The code should check if a directory corresponding
+# to the origin/master hash was created, if so, 
+# report to the user and stop. If not, create the 
+# directory and submit the jobs. 
+###############################################
+
 jdlFile = """universe = vanilla
 Executable = worker.sh
 Requirements = OpSys == "LINUX" && (Arch != "DUMMY" )
