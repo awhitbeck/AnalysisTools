@@ -1,13 +1,8 @@
-//#ifndef DISSECTINGJETMET
-//#define DISSECTINGJETMET
-//#include "dissectingJetsMET.cc"
-//#endif
-
 #ifndef FILLHISTO
 #define FILLHISTO
 
 #include "filler.h"
-#include "weightProducer.cc"
+//#include "weightProducer.cc"
 #include <iostream>
 #include <string>
 #include <cassert>
@@ -22,7 +17,8 @@ template <class TreeType> class fillHisto : public filler<TreeType> {
 public : 
 
   TString branchname;
-  weightProducer<TreeType>* weightProd;
+  //weightProducer<TreeType>* weightProd;
+  processor<TreeType>* weightProd;
   TH1F* histo;
   TreeType* ntuple;
 
@@ -36,7 +32,7 @@ public :
 	     float lowEdge = 500. , float highEdge = 1500. , 
 	     TString histoname = "default" ,
 	     TString branchname_= "HT" ,
-	     weightProducer<TreeType>* wp = NULL ){
+	     processor<TreeType>* wp = NULL ){
 
     ntuple = ntuple_;
     branchname = branchname_;
@@ -49,7 +45,7 @@ public :
 
   fillHisto( TreeType* ntuple_ , 
 	     std::vector<string> args ,
-	     weightProducer<TreeType>* weightProd = NULL ){
+	     processor<TreeType>* weightProd = NULL ){
 
     ntuple = ntuple_;
     

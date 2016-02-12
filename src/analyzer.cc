@@ -63,7 +63,7 @@ public :
     for( int iEvt = 0 ; iEvt < numEvents ; iEvt++ ){
       if( maxEvents != -1 && iEvt > maxEvents ) break;
       ntuple->fChain->GetEntry(iEvt);
-      if( iEvt % 1000000 == 0 ) cout << "Event " << iEvt << "/" << numEvents << endl;
+      if( iEvt % 10000 == 0 ) cout << "Event " << iEvt << "/" << numEvents << endl;
       
       // loop over all processors
       for( auto &ithProcessor : processorList ){
