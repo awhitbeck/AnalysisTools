@@ -8,15 +8,13 @@ eval `scramv1 runtime -sh`
 
 pwd
 
-echo "this is a crazy fucking thing!"
-
 git clone https://github.com/awhitbeck/AnalysisTools.git
 
 cd AnalysisTools
-g++ `root-config --cflags --glibs` genericPlotter.cc -o genericPlotter.exe
+g++ `root-config --cflags --glibs` genericPlotter4Jets.cc -o genericPlotter4Jets.exe
 ls
 echo "RUNNING ANALYSIS"
 ./genericPlotter.exe $1
 ls
 echo "COPYING OUTPUT"
-xrdcp genericPlotter_${1}.root root://cmseos.fnal.gov//store/user/awhitbe1/DissectingJetsPlusMET/analysis/genericPlotter_${1}.root
+xrdcp genericPlotter_${1}.root root://cmseos.fnal.gov//store/user/awhitbe1/DissectingJetsPlusMET/analysis/genericPlotter4Jets_${1}.root
