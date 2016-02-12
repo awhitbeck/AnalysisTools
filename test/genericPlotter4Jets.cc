@@ -27,11 +27,11 @@ int main(int argc, char** argv){
   dissectingJetsMET *ntuple = new dissectingJetsMET(t);
   weightProducer<dissectingJetsMET> *weightProd = new weightProducer<dissectingJetsMET>(ntuple,sample);
   selectBaseline<dissectingJetsMET> *select = new selectBaseline<dissectingJetsMET>(ntuple);
-  select4Jets<dissectingJetsMET> *select4Jets = new select4Jets<dissectingJetsMET>(ntuple);
+  select4Jets<dissectingJetsMET> *select4j = new select4Jets<dissectingJetsMET>(ntuple);
   
   analyzer<dissectingJetsMET> a(ntuple);
   a.addProcessor( select );
-  a.addProcessor( select4Jets );
+  a.addProcessor( select4j );
 
   fillHisto<dissectingJetsMET> *fillHT = new fillHisto<dissectingJetsMET>(ntuple,200,500,2500,sample,"HT",weightProd);   a.addProcessor( fillHT );
   fillHisto<dissectingJetsMET> *fillMHT = new fillHisto<dissectingJetsMET>(ntuple,200,200,1000,sample,"MHT",weightProd); a.addProcessor( fillMHT );
