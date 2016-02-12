@@ -1,5 +1,6 @@
 #include "dissectingJetsMET.cc"
 #include "selectBaseline.cc"
+#include "select4Jets.cc"
 #include "fillHisto.cc"
 #include "analyzer.cc"
 #include "weightProducer.cc"

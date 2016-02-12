@@ -12,10 +12,10 @@ git clone https://github.com/awhitbeck/AnalysisTools.git
 outputDir=$(git rev-parse origin/master)
 
 cd AnalysisTools
-g++ `root-config --cflags --glibs` genericPlotter4Jets.cc -o genericPlotter4Jets.exe
+g++ `root-config --cflags --glibs` -I./src/ -I./test/ test/genericPlotter4Jets.cc -o test/genericPlotter4Jets.exe
 ls
 echo "RUNNING ANALYSIS"
-./genericPlotter4Jets.exe $1
+./test/genericPlotter4Jets.exe $1
 ls
 echo "COPYING OUTPUT"
 #eosls /store/user/awhitbe1/GMSBstudies/skims/
