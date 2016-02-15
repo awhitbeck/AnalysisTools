@@ -1,0 +1,8 @@
+*/*.exe
+*/*.stdout
+*/*.stderr
+*/*.condor
+*/*.jdl
+*/*.pyc
+*/*~
+*/*.root

@@ -13,9 +13,9 @@ vars = [ "HT" , "MHT" , "MET" ,
          "dEta" , "sumJetMass" , "leadJetPt" ]
 
 for var in vars : 
-    stackPlots(sampleChoice="all" , inputFile="genericPlotter.root" , x=var )
+    stackPlots(sampleChoice="all" , inputFile="genericPlotter4Jets.root" , x=var )
 
 for sample in samples :
-    stackPlots( sample , "genericPlotter.root" , "HT" )
+    stackPlots( sample , "genericPlotter4Jets.root" , "HT" )
 
 os.system("scp *Stack*.png whitbeck@lxplus.cern.ch:www/.")

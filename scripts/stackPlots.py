@@ -88,7 +88,7 @@ def stackPlots( sampleChoice , inputFile , x ):
             histos[-1].SetFillStyle(2)
             #histos[-1].SetMaximum(10000000)
             histos[-1].SetMinimum(1)
-            yields = f.Get("baselineYields_"+sample+"_"+samples[sample][i])
+            yields = f.Get("baseline4JetYields_"+sample+"_"+samples[sample][i])
             print yields.GetBinContent(0)
             histos[-1].Scale(1./yields.GetBinContent(0))
             stack.Add(histos[-1])
@@ -99,13 +99,13 @@ def stackPlots( sampleChoice , inputFile , x ):
     stack.SetMinimum(1)
 
     if sampleChoice == "all" :
-        can.SaveAs("{0}_allStack.png".format(x))
+        can.SaveAs("{0}_allStack_4jets.png".format(x))
         can.SetLogy()
-        can.SaveAs("{0}_allStackLogY.png".format(x))
+        can.SaveAs("{0}_allStackLogY_4jets.png".format(x))
     else :
-        can.SaveAs("{0}_{1}Stack.png".format(x,sample))
+        can.SaveAs("{0}_{1}Stack_4jets.png".format(x,sample))
         can.SetLogy()
-        can.SaveAs("{0}_{1}StackLogY.png".format(x,sample))
+        can.SaveAs("{0}_{1}StackLogY_4jets.png".format(x,sample))
 
 if __name__ == "__main__":
     stackPlots( options.sample , options.file , options.x )

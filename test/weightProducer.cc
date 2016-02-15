@@ -1,8 +1,3 @@
-//#ifndef DISSECTINGJETMET
-//#define DISSECTINGJETMET
-//#include "dissectingJetsMET.cc"
-//#endif
-
 #ifndef WEIGHTPRODUCER
 #define WEIGHTPRODUCER
 
@@ -10,8 +5,7 @@
 #include <iostream>
 #include <string>
 #include <map>
-
-//#include <boost/algorithm/string.hpp>
+#include <cassert>
 
 #include "TString.h"
 
@@ -46,7 +40,7 @@ public :
     if( sample == "znunu_2900_3900" )    weight = 0.015104699949*lumi;
     if( sample == "znunu_3900_5000" )    weight = 0.00155900261758*lumi;
     if( sample == "znunu_5000_100000" )  weight = 0.000153373693727*lumi;
-
+      
     if( sample == "Wjets_0_400" )        weight = 6363.608615*lumi;
     if( sample == "Wjets_400_900" )      weight = 432.88054467*lumi;
     if( sample == "Wjets_900_1600" )     weight = 23.3849837436*lumi;
@@ -55,7 +49,7 @@ public :
     if( sample == "Wjets_3500_4600" )    weight = 0.0121681361371*lumi;
     if( sample == "Wjets_4600_5700" )    weight = 0.001086189415*lumi;
     if( sample == "Wjets_5700_100000" )  weight = 0.000106971454914*lumi;
-
+      
     if( sample == "ttbar_0_600" )        weight = 435.841349313*lumi;
     if( sample == "ttbar_600_1200" )     weight = 32.6826950495*lumi;
     if( sample == "ttbar_1200_1900" )    weight = 2.0582766*lumi;
@@ -63,7 +57,7 @@ public :
     if( sample == "ttbar_2700_3600" )    weight = 0.01588917*lumi;
     if( sample == "ttbar_3600_4600" )    weight = 0.0015207095742*lumi;
     if( sample == "ttbar_4600_100000" )  weight = 0.000141367514851*lumi;
-
+      
     if( sample == "QCD_0_300" )         weight = 10290243.9856*lumi;
     if( sample == "QCD_300_600" )       weight = 265934.6*lumi;
     if( sample == "QCD_600_1000" )      weight = 12545.2493946*lumi;
@@ -74,7 +68,15 @@ public :
     if( sample == "QCD_4300_5300" )     weight = 0.03827015*lumi;
     if( sample == "QCD_5300_6300" )     weight = 0.003799263*lumi;
     if( sample == "QCD_6300_100000" )   weight = 0.0004130418*lumi;
-      
+
+    try{
+      if( weight <= 0. ) throw weight;
+    }catch( double w ){
+      std::cout << "Exception caught in weightProducer::weightProducer()" << std::endl;
+      std::cout << " - sample not found ... weight set to default: " << w << std::endl;
+      assert(0);
+    }
+
   };
 
   bool process( ) override {
