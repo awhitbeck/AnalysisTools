@@ -45,7 +45,7 @@ public :
     else return false;
     if( ntuple->NLeptons <= 0 || static_cast<bool>(cutMask&8) ) histo->Fill(4);
     else return false;
-    if( ntuple->dPhi>0.3 || static_cast<bool>(cutMask&16) ) histo->Fill(5);
+    if( ntuple->dPhi>0.5 || static_cast<bool>(cutMask&16) ) histo->Fill(5);
     else return false;
 
     return true;

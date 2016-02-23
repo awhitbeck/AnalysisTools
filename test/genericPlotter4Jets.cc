@@ -26,7 +26,7 @@ int main(int argc, char** argv){
   
   dissectingJetsMET *ntuple = new dissectingJetsMET(t);
   weightProducer<dissectingJetsMET> *weightProd = new weightProducer<dissectingJetsMET>(ntuple,sample);
-  selectBaseline<dissectingJetsMET> *select = new selectBaseline<dissectingJetsMET>(ntuple);
+  selectBaseline<dissectingJetsMET> *select = new selectBaseline<dissectingJetsMET>(ntuple,16);
   select4Jets<dissectingJetsMET> *select4j = new select4Jets<dissectingJetsMET>(ntuple);
   
   analyzer<dissectingJetsMET> a(ntuple);
