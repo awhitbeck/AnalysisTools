@@ -99,13 +99,13 @@ def stackPlots( sampleChoice , inputFile , x ):
     stack.SetMinimum(1)
 
     if sampleChoice == "all" :
-        can.SaveAs("{0}_allStack_4jets.png".format(x))
+        can.SaveAs("{0}_allStack_4jets_nodPhi.png".format(x))
         can.SetLogy()
-        can.SaveAs("{0}_allStackLogY_4jets.png".format(x))
+        can.SaveAs("{0}_allStackLogY_4jets_nodPhi.png".format(x))
     else :
-        can.SaveAs("{0}_{1}Stack_4jets.png".format(x,sample))
+        can.SaveAs("{0}_{1}Stack_4jets_nodPhi.png".format(x,sample))
         can.SetLogy()
-        can.SaveAs("{0}_{1}StackLogY_4jets.png".format(x,sample))
+        can.SaveAs("{0}_{1}StackLogY_4jets_nodPhi.png".format(x,sample))
 
 if __name__ == "__main__":
     stackPlots( options.sample , options.file , options.x )

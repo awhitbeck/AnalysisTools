@@ -25,13 +25,13 @@ int main(int argc, char** argv){
   TChain* t = buildChain("slimFiles.txt",sample,"analysisTree");
   
   dissectingJetsMET *ntuple = new dissectingJetsMET(t);
-  weightProducer<dissectingJetsMET> *weightProd = new weightProducer<dissectingJetsMET>(ntuple,sample);
+  weightProducer<dissectingJetsMET> *weightProd = new weightProducer<dissectingJetsMET>(ntuple,sample,5000.);
   selectBaseline<dissectingJetsMET> *select = new selectBaseline<dissectingJetsMET>(ntuple,16);
   select4Jets<dissectingJetsMET> *select4j = new select4Jets<dissectingJetsMET>(ntuple);
   
   analyzer<dissectingJetsMET> a(ntuple);
   a.addProcessor( select );
-  a.addProcessor( select4j );
+  //a.addProcessor( select4j );
 
   fillHisto<dissectingJetsMET> *fillHT = new fillHisto<dissectingJetsMET>(ntuple,200,500,2500,sample,"HT",weightProd);   a.addProcessor( fillHT );
   fillHisto<dissectingJetsMET> *fillMHT = new fillHisto<dissectingJetsMET>(ntuple,200,200,1000,sample,"MHT",weightProd); a.addProcessor( fillMHT );

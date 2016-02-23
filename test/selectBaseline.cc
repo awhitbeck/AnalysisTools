@@ -37,11 +37,11 @@ public :
     */
 
     histo->Fill(0);
-    if( ntuple->HT>500. || static_cast<bool>(cutMask&1) ) histo->Fill(1);
+    if( ntuple->NJets>=4 || static_cast<bool>(cutMask&1) ) histo->Fill(1);
     else return false;
-    if( ntuple->MHT>200. || static_cast<bool>(cutMask&2) ) histo->Fill(2); 
+    if( ntuple->HT>500. || static_cast<bool>(cutMask&2) ) histo->Fill(2);
     else return false;
-    if( ntuple->NJets>=2 || static_cast<bool>(cutMask&4) ) histo->Fill(3);
+    if( ntuple->MHT>200. || static_cast<bool>(cutMask&4) ) histo->Fill(3); 
     else return false;
     if( ntuple->NLeptons <= 0 || static_cast<bool>(cutMask&8) ) histo->Fill(4);
     else return false;
