@@ -38,15 +38,30 @@ public :
 
     histo->Fill(0);
     if( ntuple->NJets>=4 || static_cast<bool>(cutMask&1) ) histo->Fill(1);
-    else return false;
+    else{
+      //cout << "Njets cut failed" << endl;
+      return false;
+    }
     if( ntuple->HT>500. || static_cast<bool>(cutMask&2) ) histo->Fill(2);
-    else return false;
+    else{
+      //cout << "HT cut failed" << endl;
+      return false;
+    }
     if( ntuple->MHT>200. || static_cast<bool>(cutMask&4) ) histo->Fill(3); 
-    else return false;
+    else{
+      //cout << "MHT cut failed" << endl;
+      return false;
+    }
     if( ntuple->NLeptons <= 0 || static_cast<bool>(cutMask&8) ) histo->Fill(4);
-    else return false;
+    else{
+      //cout << "NLeptons cut failed" << endl;
+      return false;
+    }
     if( ntuple->dPhi>0.5 || static_cast<bool>(cutMask&16) ) histo->Fill(5);
-    else return false;
+    else{
+      //cout << "dPhi cut failed" << endl;
+      return false;
+    }
 
     return true;
 

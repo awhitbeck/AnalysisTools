@@ -90,6 +90,7 @@ def stackPlots( sampleChoice , inputFile , x ):
             histos[-1].SetMinimum(1)
             yields = f.Get("baseline4JetYields_"+sample+"_"+samples[sample][i])
             print yields.GetBinContent(0)
+            ### this line is now done when the weights are computed
             #histos[-1].Scale(1./yields.GetBinContent(0))
             stack.Add(histos[-1])
 

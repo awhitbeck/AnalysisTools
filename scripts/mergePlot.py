@@ -32,7 +32,7 @@ vars = [ "HT" ,
          ]
 
 for var in vars : 
-    stackPlots(sampleChoice="all" , inputFile="genericPlotter4Jets_nodPhi.root" , x=var )
+    stackPlots(sampleChoice="QCD" , inputFile="genericPlotter4Jets_nodPhi.root" , x=var )
 
 #for sample in samples :
 #    for var in vars :
