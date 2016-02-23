@@ -15,8 +15,10 @@ cd AnalysisTools
 g++ `root-config --cflags --glibs` -I./src/ -I./test/ test/genericPlotter4Jets.cc -o test/genericPlotter4Jets.exe
 ls
 echo "RUNNING ANALYSIS"
-./test/genericPlotter4Jets.exe $1
+cd test
+./genericPlotter4Jets.exe $1
 ls
+cd -
 echo "COPYING OUTPUT"
 #eosls /store/user/awhitbe1/GMSBstudies/skims/
-xrdcp genericPlotter4Jets_${1}.root root://cmseos.fnal.gov//store/user/awhitbe1/DissectingJetsPlusMET/analysis/genericPlotter4Jets_${1}.root
+xrdcp test/genericPlotter4Jets_${1}.root root://cmseos.fnal.gov//store/user/awhitbe1/DissectingJetsPlusMET/analysis/genericPlotter4Jets_${1}.root

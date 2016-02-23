@@ -6,16 +6,36 @@ from stackPlots import *
 #os.system("source /cvmfs/cms.cern.ch/cmsset_default.sh")
 #os.system("hadd -f genericPlotter.root `xrdfsls -u /store/user/awhitbe1/DissectingJetsPlusMET/analysis/ | grep genericPlotter | grep \.root`")
 
-samples = [ "znunu" , "ttbar" , "Wjets" , "QCD" ]
-vars = [ "HT" , "MHT" , "MET" , 
-         "mT2" , "alphaT" , "mRazor" , "dRazor" , 
-         "mEff" , "NJets" , "NLeptons" , "dPhi" , 
-         "dEta" , "sumJetMass" , "leadJetPt" ]
+samples = [ #"znunu" , 
+            #"ttbar" , 
+            #"Wjets" , 
+            "QCD" ]
+vars = [ #"HT" , 
+         #"MHT" , 
+         #"MET" , 
+         #"mT2" , 
+         #"alphaT" , 
+         #"mRazor" , 
+         #"dRazor" , 
+         #"mEff" , 
+         #"NJets" , 
+         #"NLeptons" , 
+         "dPhi" , 
+         "dPhi1" , 
+         "dPhi2" , 
+         "dPhi3" , 
+         "dPhi4" , 
+         #"dEta" , 
+         #"sumJetMass" , 
+         #"leadJetPt",
+         "baselineYields"
+         ]
 
-for var in vars : 
-    stackPlots(sampleChoice="all" , inputFile="genericPlotter4Jets.root" , x=var )
+#for var in vars : 
+#    stackPlots(sampleChoice="all" , inputFile="dPhiTests.root" , x=var )
 
 for sample in samples :
-    stackPlots( sample , "genericPlotter4Jets.root" , "HT" )
+    for var in vars :
+        stackPlots( sample , "dPhiTests.root" , var )
 
 os.system("scp *Stack*.png whitbeck@lxplus.cern.ch:www/.")

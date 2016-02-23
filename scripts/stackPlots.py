@@ -88,7 +88,7 @@ def stackPlots( sampleChoice , inputFile , x ):
             histos[-1].SetFillStyle(2)
             #histos[-1].SetMaximum(10000000)
             histos[-1].SetMinimum(1)
-            yields = f.Get("baseline4JetYields_"+sample+"_"+samples[sample][i])
+            yields = f.Get("baselineYields_"+sample+"_"+samples[sample][i])
             print yields.GetBinContent(0)
             histos[-1].Scale(1./yields.GetBinContent(0))
             stack.Add(histos[-1])
