@@ -37,7 +37,7 @@ public :
   
   // ntuple class
   TreeType* ntuple;
-
+  int reportEvery;
   // maintain a list of processes that should be 
   // run on each event:
   //     note, processor is a purely virtual class, 
@@ -55,6 +55,8 @@ public :
     processorList.push_back( p ) ;
   };
 
+  void setReportEvery(int re){ reportEvery = re ; };
+
   // function for looping over events in ntuple
   // each process is called once.  If any of them 
   // return false, the next event is processed. 
@@ -63,7 +65,7 @@ public :
     for( int iEvt = 0 ; iEvt < numEvents ; iEvt++ ){
       if( maxEvents != -1 && iEvt > maxEvents ) break;
       ntuple->fChain->GetEntry(iEvt);
-      if( iEvt % 10000 == 0 ) cout << "Event " << iEvt << "/" << numEvents << endl;
+      if( iEvt % reportEvery == 0 ) cout << "Event " << iEvt << "/" << numEvents << endl;
       
       // loop over all processors
       for( auto &ithProcessor : processorList ){

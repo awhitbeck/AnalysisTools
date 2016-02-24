@@ -32,10 +32,9 @@ vars = [ "HT" ,
          ]
 
 for var in vars : 
-    stackPlots(sampleChoice="QCD" , inputFile="genericPlotter4Jets_nodPhi.root" , x=var )
+    stackPlots(sampleChoice="all" , inputFile="genericPlotter4Jets.root" , x=var )
 
-#for sample in samples :
-#    for var in vars :
-#        stackPlots( sample , "dPhiTests.root" , var )
+for sample in samples :
+    stackPlots( sample , "dPhiTests.root" , "baseline4JetYields" )
 
-os.system("scp *Stack*.png whitbeck@lxplus.cern.ch:www/.")
+os.system("scp *Stack*.png whitbeck@lxplus.cern.ch:www/DissectingJetsMET/1DplotsNormalized/RA2bBaseline/.")

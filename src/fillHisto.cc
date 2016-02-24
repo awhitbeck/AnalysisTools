@@ -21,6 +21,8 @@ public :
   //processor<TreeType>* weightProd;
   TH1F* histo;
   TreeType* ntuple;
+  TString weightBranch;
+  double lumi;
 
   fillHisto(){
     ntuple = 0;
@@ -37,10 +39,37 @@ public :
     ntuple = ntuple_;
     branchname = branchname_;
     weightProd = wp;
+    weightBranch="";
+    lumi = 0.;
     histo = new TH1F(branchname+"_"+histoname,branchname+"_"+histoname,nBins,lowEdge,highEdge);
     if( weightProd != NULL )
       histo->Sumw2();
+    
+  };
 
+  fillHisto( TreeType* ntuple_ , 
+	     int nBins = 20 , 
+	     float lowEdge = 500. , float highEdge = 1500. , 
+	     TString histoname = "default" ,
+	     TString branchname_= "HT" ,
+	     TString weightBranch_ = "lheWeight" ,
+	     double lumi_ = 10000. ){
+
+    ntuple = ntuple_;
+    branchname = branchname_;
+    weightBranch = weightBranch_;
+    lumi = lumi_;
+    weightProd = NULL;
+    histo = new TH1F(branchname+"_"+histoname,branchname+"_"+histoname,nBins,lowEdge,highEdge);
+    if( weightProd != NULL || weightBranch != "" )
+      histo->Sumw2();
+    try{
+      if( ntuple->fChain->GetLeaf(weightBranch)==NULL ) throw weightBranch;
+    }catch( TString wb ){
+      std::cout << "Exception caught in fillHisto::fillHisto()" << std::endl;
+      std::cout << "no branch, " << wb << " was found in tree." << std::endl;
+      assert(0);
+    }
   };
 
   fillHisto( TreeType* ntuple_ , 
@@ -58,10 +87,14 @@ public :
   };
 
   bool process( ) override {
-    if( weightProd == NULL )
+    
+    if( weightProd == NULL && weightBranch == "" )
       histo->Fill( ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() );
+    else if( weightBranch != "" && weightProd == NULL )
+      histo->Fill( ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() , ntuple->fChain->GetLeaf( weightBranch.Data() )->GetValue()*lumi );
     else
       histo->Fill( ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() , weightProd->weight );
+
     return true;
   };
 

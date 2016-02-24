@@ -1,8 +1,3 @@
-//#ifndef DISSECTINGJETMET
-//#define DISSECTINGJETMET
-//#include "dissectingJetsMET.cc"
-//#endif
-
 #ifndef FILLHT
 #define FILLHT
 

@@ -10,6 +10,7 @@ pwd
 
 git clone https://github.com/awhitbeck/AnalysisTools.git
 outputDir=$(git rev-parse origin/master)
+echo "HASH: "$outputDir
 
 cd AnalysisTools
 g++ `root-config --cflags --glibs` -I./src/ -I./test/ test/genericPlotter4Jets.cc -o test/genericPlotter4Jets.exe
