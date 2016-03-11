@@ -31,13 +31,15 @@ int main(int argc, char** argv){
   tranTree *ntuple = new tranTree(t);
 
   selectBaseline<tranTree> *select = new selectBaseline<tranTree>(ntuple);
+  select4Jets<tranTree> *select4jets = new select4Jets<tranTree>(ntuple);
   //filterHighWeights<tranTree> *weightFilter = new filterHighWeights<tranTree>(ntuple);
   
-  analyzer<tranTree> a(ntuple,17);
+  analyzer<tranTree> a(ntuple,18);
   a.verbosity=0;
   a.setReportEvery(200000);
   //a.addProcessor( weightFilter );
   a.addProcessor( select );
+  a.addProcessor( select4jets );
 
   hFiller *fillHT = new hFiller(ntuple,50,500,2500,sample,"HT","lheWeight",10000.);   a.addProcessor( fillHT );
   fillHT->histo->SetTitle(";HT [GeV];Events");
@@ -74,7 +76,7 @@ int main(int argc, char** argv){
   
   a.looper();
 
-  TFile* outFile = new TFile("genericPlotter_"+sample+".root","UPDATE");
+  TFile* outFile = new TFile("genericPlotter4Jets_"+sample+".root","UPDATE");
 
   /*
   for( unsigned int iProc = 0 ; iProc < a.processorList.size() ; iProc++ ){
@@ -101,6 +103,7 @@ int main(int argc, char** argv){
   fillleadJetPt->histo->Write();
 
   select->histo->Write("baselineYields_"+sample);
+  select4jets->histo->Write("4JetsYields_"+sample);
   outFile->Close();
 
 }  

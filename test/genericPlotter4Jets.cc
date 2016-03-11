@@ -27,11 +27,11 @@ int main(int argc, char** argv){
   dissectingJetsMET *ntuple = new dissectingJetsMET(t);
   weightProducer<dissectingJetsMET> *weightProd = new weightProducer<dissectingJetsMET>(ntuple,sample,5000.);
   selectBaseline<dissectingJetsMET> *select = new selectBaseline<dissectingJetsMET>(ntuple);
-  select4Jets<dissectingJetsMET> *select4j = new select4Jets<dissectingJetsMET>(ntuple);
-  
+  select4Jets<dissectingJetsMET> *select4jets = new select4Jets<dissectingJetsMET>(ntuple);
+
   analyzer<dissectingJetsMET> a(ntuple);
   a.addProcessor( select );
-  //a.addProcessor( select4j );
+  a.addProcessor( select4jets );
 
   fillHisto<dissectingJetsMET> *fillHT = new fillHisto<dissectingJetsMET>(ntuple,200,500,2500,sample,"HT",weightProd);   a.addProcessor( fillHT );
   fillHisto<dissectingJetsMET> *fillMHT = new fillHisto<dissectingJetsMET>(ntuple,200,200,1000,sample,"MHT",weightProd); a.addProcessor( fillMHT );
@@ -74,7 +74,8 @@ int main(int argc, char** argv){
   fillsumJetMass->histo->Write();
   fillleadJetPt->histo->Write();
 
-  select->histo->Write("baseline4JetYields_"+sample);
+  select->histo->Write("baselineYields_"+sample);
+  select4jets->histo->Write("4jetsYields_"+sample);
   outFile->Close();
 
 }  

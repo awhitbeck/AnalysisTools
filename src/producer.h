@@ -11,13 +11,22 @@ template <class TreeType> class producer : public processor<TreeType> {
   TreeType *ntuple ; 
   TTree* newTree ;
 
-  producer(){
-    ntuple = 0;
-  };
-  producer( TreeType* ntuple_ ){
-    ntuple = ntuple_;
-  };
-
+  producer()
+    : processor<TreeType>("producer")
+    {
+      ntuple = 0;
+    };
+  producer( TString moduleName_ )
+    : processor<TreeType>(moduleName_)
+    {
+      ntuple = 0;
+    };
+  producer( TString moduleName_ , TreeType* ntuple_ )
+    : processor<TreeType>(moduleName_)
+    {
+      ntuple = ntuple_;
+    };
+  
   virtual void postProcess() = 0 ;
  
 };

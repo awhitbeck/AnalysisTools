@@ -1,5 +1,6 @@
 #include "dissectingJetsMET.cc"
 #include "selectBaseline.cc"
+#include "select4Jets.cc"
 #include "fillHisto.cc"
 #include "analyzer.cc"
 #include "weightProducer.cc"
@@ -24,9 +25,9 @@ int main(int argc, char** argv){
   TChain* t = buildChain("slimFiles.txt",sample,"analysisTree");
   
   dissectingJetsMET *ntuple = new dissectingJetsMET(t);
-  weightProducer<dissectingJetsMET> *weightProd = new weightProducer<dissectingJetsMET>(ntuple,sample);
+  weightProducer<dissectingJetsMET> *weightProd = new weightProducer<dissectingJetsMET>(ntuple,sample,5000.);
   selectBaseline<dissectingJetsMET> *select = new selectBaseline<dissectingJetsMET>(ntuple);
-  
+
   analyzer<dissectingJetsMET> a(ntuple);
   a.addProcessor( select );
 

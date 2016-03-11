@@ -1,8 +1,3 @@
-//#ifndef DISSECTINGJETMET
-//#define DISSECTINGJETMET
-//#include "dissectingJetsMET.cc"
-//#endif
-
 #ifndef ANALYZER
 #define ANALYZER
 
@@ -30,7 +25,6 @@ vector<string> split(const string &s, char delim) {
   return elems;
 }
 
-
 template <class TreeType> class analyzer{
   
 public : 
@@ -38,21 +32,37 @@ public :
   // ntuple class
   TreeType* ntuple;
   int reportEvery;
+  int verbosity;
+
   // maintain a list of processes that should be 
   // run on each event:
   //     note, processor is a purely virtual class, 
   //     so it must be used as a pointer
-  vector<processor<TreeType>* > processorList;
+  vector<processor<TreeType>* >* processorList;
 
-  analyzer( TreeType* ntuple_ ){
+  analyzer( TreeType* ntuple_ , int numProcessors = 0){
     ntuple = ntuple_ ;
+    verbosity=0;
+    processorList = new vector<processor<TreeType>* >(numProcessors,NULL);
   };
 
   ~analyzer(){};
 
   // push processor into list
   void addProcessor( processor<TreeType>* p ){
-    processorList.push_back( p ) ;
+    //cout << "analyzer::addProcessor - processor: " << p << endl;
+    //cout << "module name: " << p->moduleName << endl;
+
+    unsigned int ithProcessor = 0 ;
+    while( processorList->at(ithProcessor) != NULL && ithProcessor<processorList->size() ){
+      ithProcessor++;
+    }
+    if( ithProcessor >= processorList->size() ){
+      processorList->push_back( p ) ;
+    }else{
+      processorList->at(ithProcessor) = p;
+    }
+
   };
 
   void setReportEvery(int re){ reportEvery = re ; };
@@ -68,12 +78,14 @@ public :
       if( iEvt % reportEvery == 0 ) cout << "Event " << iEvt << "/" << numEvents << endl;
       
       // loop over all processors
-      for( auto &ithProcessor : processorList ){
-	if( ! ithProcessor->process() ){
-	  //cout << "false" << endl;
-	  break;
-	}
-      }// end loop over processors 
+      for( unsigned int i = 0 ; i < processorList->size() ; i++ ){
+	if( verbosity > 5 ) cout << "module: " << processorList->at(i)->moduleName << endl;
+	if( ! processorList->at(i)->process() ){
+          if( verbosity > 0 ) cout << processorList->at(i)->moduleName << ": false" << endl;  
+          break;
+        }        
+      }
+      
     }// end loop over events
   };
 

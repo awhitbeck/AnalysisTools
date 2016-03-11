@@ -24,7 +24,8 @@ public :
   TString weightBranch;
   double lumi;
 
-  fillHisto(){
+  fillHisto()
+    : filler<TreeType>("fillHisto"){
     ntuple = 0;
     histo = new TH1F("test","test",20,500.,1500.);
   };
@@ -34,7 +35,8 @@ public :
 	     float lowEdge = 500. , float highEdge = 1500. , 
 	     TString histoname = "default" ,
 	     TString branchname_= "HT" ,
-	     weightProducer<TreeType>* wp = NULL ){
+	     weightProducer<TreeType>* wp = NULL )
+    : filler<TreeType>("fillHisto_"+histoname){
 
     ntuple = ntuple_;
     branchname = branchname_;
@@ -44,6 +46,10 @@ public :
     histo = new TH1F(branchname+"_"+histoname,branchname+"_"+histoname,nBins,lowEdge,highEdge);
     if( weightProd != NULL )
       histo->Sumw2();
+    
+    ntuple->fChain->SetBranchStatus(branchname.Data(),1);
+    if( ntuple->fChain->GetLeaf( branchname.Data() ) == NULL ) 
+      assert(0);
     
   };
 

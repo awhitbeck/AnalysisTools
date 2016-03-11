@@ -19,8 +19,14 @@ public :
   TreeType* ntuple;
   int cutMask;
 
-  selectBaseline(){ ntuple = 0; };
-  selectBaseline( TreeType *ntuple_ , int cutMask_ = 0 ){
+  selectBaseline()
+    : processor<TreeType>("selectBaseline")
+  { 
+    ntuple = 0; 
+  };
+  selectBaseline( TreeType *ntuple_ , int cutMask_ = 0 )
+    : processor<TreeType>("selectBaseline")
+  {
     ntuple = ntuple_;
     histo = new TH1F("selectBaselineYields","selectBaselineYields",5,0.5,5.5);
     cutMask = cutMask_;
@@ -37,7 +43,7 @@ public :
     */
 
     histo->Fill(0);
-    if( ntuple->NJets>=4 || static_cast<bool>(cutMask&1) ) histo->Fill(1);
+    if( ntuple->NJets>=1 || static_cast<bool>(cutMask&1) ) histo->Fill(1);
     else{
       //cout << "Njets cut failed" << endl;
       return false;

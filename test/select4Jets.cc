@@ -13,8 +13,14 @@ public :
   TH1F* histo;
   TreeType* ntuple;
 
-  select4Jets(){ ntuple = 0; };
-  select4Jets( TreeType *ntuple_ ){
+  select4Jets()
+    : processor<TreeType>("select4Jets")
+  { 
+    ntuple = 0; 
+  };
+  select4Jets( TreeType *ntuple_ )
+    : processor<TreeType>("select4Jets")
+  {
     ntuple = ntuple_;
     histo = new TH1F("select4JetsYields","select4JetsYields",1,0.5,1.5);
   };

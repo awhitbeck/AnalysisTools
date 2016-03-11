@@ -6,11 +6,17 @@ template <class TreeType> class processor {
 public : 
 
   TreeType *ntuple ; 
+  TString moduleName ;
 
-  processor(){ ntuple=0; };
-  processor( TreeType* ntuple_ ){
+  processor(){ moduleName = "<NONE>" ; ntuple = 0; };
+  processor(TString moduleName_){ moduleName = moduleName_ ; ntuple=0; };
+  processor(TString moduleName_ , TreeType* ntuple_ ){
+    moduleName = moduleName_;
     ntuple = ntuple_ ;
+
   };
+
+  TString getModuleName(){ return moduleName ; };
 
   // purely virtual method to be implement by children
   virtual bool process( ) = 0 ;

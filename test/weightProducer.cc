@@ -21,7 +21,9 @@ public :
   int nEvents;
   TreeType* ntuple;
 
-  weightProducer(){
+  weightProducer()
+    : processor<TreeType>("weightProducer")
+  {
     ntuple = 0;
     sample = "";
     weight = -999.;
@@ -30,7 +32,9 @@ public :
 
   weightProducer( TreeType* ntuple_ , 
 		  TString sample_ = "ttbar" ,
-		  double lumi_ = 10.){
+		  double lumi_ = 10.)
+    : processor<TreeType>("weightProducer")
+  {
     ntuple = ntuple_;
     sample = sample_;
     weight = -999.;
