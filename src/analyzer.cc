@@ -52,14 +52,19 @@ public :
   void addProcessor( processor<TreeType>* p ){
     //cout << "analyzer::addProcessor - processor: " << p << endl;
     //cout << "module name: " << p->moduleName << endl;
-
+    
     unsigned int ithProcessor = 0 ;
-    while( processorList->at(ithProcessor) != 0 && ithProcessor<processorList->size() ){      
-      ithProcessor++;
+    //cout << "- - - - - - " << endl;
+    for( ; ithProcessor < processorList->size() ; ithProcessor++ ){
+      //cout << processorList->at(ithProcessor) << endl;
+      if( processorList->at(ithProcessor) == 0 ) break; 
     }
-    if( ithProcessor >= processorList->size()-1 ){
+
+    if( ithProcessor >= processorList->size() ){
+      //cout << "push_back processor" << endl;
       processorList->push_back( p ) ;
     }else{
+      //cout << "assign processor" << endl;
       processorList->at(ithProcessor) = p;
     }
 

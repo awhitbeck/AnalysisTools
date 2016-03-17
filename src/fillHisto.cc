@@ -106,14 +106,19 @@ public :
 
   bool process( ) override {
     
-    if( weightProd == NULL && weightBranch == "" )
+    if( weightProd == NULL && weightBranch == "" ){
+      //cout << branchname.Data() << " " << ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() << endl;
       histo->Fill( ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() );
-    else if( weightBranch != "" && weightProd == NULL )
+    }else if( weightBranch != "" && weightProd == NULL ){
+      //cout << branchname.Data() << " " << ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() << " weight: " << ntuple->fChain->GetLeaf( weightBranch.Data() )->GetValue()*lumi << endl;
       histo->Fill( ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() , ntuple->fChain->GetLeaf( weightBranch.Data() )->GetValue()*lumi );
-    else
+    }else{
+      //cout << branchname.Data() << " " << ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() << " weight: " << weightProd->weight << endl;
       histo->Fill( ntuple->fChain->GetLeaf( branchname.Data() )->GetValue() , weightProd->weight );
+    }
 
     return true;
+
   };
 
 };
