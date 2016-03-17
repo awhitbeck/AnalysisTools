@@ -40,7 +40,7 @@ public :
   //     so it must be used as a pointer
   vector<processor<TreeType>* >* processorList;
 
-  analyzer( TreeType* ntuple_ , int numProcessors = 0){
+  analyzer( TreeType* ntuple_ , int numProcessors = 1){
     ntuple = ntuple_ ;
     verbosity=0;
     processorList = new vector<processor<TreeType>* >(numProcessors,NULL);
@@ -54,10 +54,10 @@ public :
     //cout << "module name: " << p->moduleName << endl;
 
     unsigned int ithProcessor = 0 ;
-    while( processorList->at(ithProcessor) != NULL && ithProcessor<processorList->size() ){
+    while( processorList->at(ithProcessor) != 0 && ithProcessor<processorList->size() ){      
       ithProcessor++;
     }
-    if( ithProcessor >= processorList->size() ){
+    if( ithProcessor >= processorList->size()-1 ){
       processorList->push_back( p ) ;
     }else{
       processorList->at(ithProcessor) = p;

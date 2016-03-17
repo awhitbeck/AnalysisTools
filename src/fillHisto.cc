@@ -77,7 +77,7 @@ public :
       assert(0);
     }
   };
-
+  
   fillHisto( TreeType* ntuple_ , 
 	     std::vector<string> args ,
 	     weightProducer<TreeType>* weightProd = NULL ){
@@ -91,6 +91,18 @@ public :
     }
     
   };
+
+  fillHisto( const fillHisto& rhs , TString histoName = "default" ){
+
+    branchname = rhs.branchname;
+    weightProd = rhs.weightProd;
+    histo = new TH1F(*rhs.histo);
+    histo->SetNameTitle(histoName,histoName);
+    ntuple = rhs.ntuple;
+    weightBranch = rhs.weightBranch;
+    lumi = rhs.lumi;
+
+  }
 
   bool process( ) override {
     
