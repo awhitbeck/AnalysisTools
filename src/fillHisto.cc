@@ -16,11 +16,11 @@ template <class TreeType> class fillHisto : public filler<TreeType> {
 
 public : 
 
+  TreeType* ntuple;
+  TH1F* histo;
   TString branchname;
   weightProducer<TreeType>* weightProd;
   //processor<TreeType>* weightProd;
-  TH1F* histo;
-  TreeType* ntuple;
   TString weightBranch;
   double lumi;
 
@@ -120,6 +120,12 @@ public :
     return true;
 
   };
+
+  /*
+  void postProcess( ) override {    
+    histo->Write();
+  };
+  */
 
 };
 

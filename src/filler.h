@@ -15,8 +15,8 @@ template <class TreeType> class filler : public processor<TreeType> {
 
  public : 
   
-  TH1F* histo;
   TreeType *ntuple ; 
+  TH1F* histo;
 
  filler()
    : processor<TreeType>("filler"){};
@@ -34,9 +34,10 @@ template <class TreeType> class filler : public processor<TreeType> {
   
  //void parseArguments( std::vector<string> );
   
- // not yet implemented
- void saveHisto( TFile* outputFile ){};
-  
+ void postProcess( ) override {
+   histo->Write();
+ }
+
 };
 
 #endif

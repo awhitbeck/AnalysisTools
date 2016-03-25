@@ -21,11 +21,11 @@ vars = [ "HT" , "MHT" , "MET" , "mT2" , "mT2_zeroMass" ,
 
 can = TCanvas("can","can",500,500)
 for var in vars : 
-    stackPlots(sampleChoices=allsamples , inputFile="genericPlotter4Jets.root" , x=var )
+    stackPlots(sampleChoices=allsamples , inputFile="genericPlotter.root" , x=var )
 
-    can.SaveAs("{0}_allStack_4jets.png".format(var))
+    can.SaveAs("{0}_allStack.png".format(var))
     can.SetLogy()
-    can.SaveAs("{0}_allStackLogY_4jets.png".format(var))
+    can.SaveAs("{0}_allStackLogY.png".format(var))
 
 #for sample in samples :
 #    stackPlots( sample , "dPhiTests.root" , "baselineYields" )

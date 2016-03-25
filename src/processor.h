@@ -13,13 +13,13 @@ public :
   processor(TString moduleName_ , TreeType* ntuple_ ){
     moduleName = moduleName_;
     ntuple = ntuple_ ;
-
   };
 
   TString getModuleName(){ return moduleName ; };
 
-  // purely virtual method to be implement by children
+  // purely virtual methods to be implement by children
   virtual bool process( ) = 0 ;
+  virtual void postProcess( ) = 0 ; 
 
 };
 

@@ -49,7 +49,7 @@ class plotterInput :
         self.histo.SetLineWidth(self.lineWidth)
         self.histo.SetLineStyle(self.lineStyle)
         self.histo.SetFillColor(self.fillColor)
-        #self.histo.SetFillStyle(self.fillStyle)
+        self.histo.SetFillStyle(self.fillStyle)
         
     def drawHisto(self,options="") :
         if self.histo == None : 
@@ -118,7 +118,7 @@ def stackPlots( sampleChoices , inputFile , x , log=False):
     #stack.SetMaximum(10000000)
     stack.SetMinimum(1)
     
-    leg.Draw()
+    #leg.Draw()
     can.SaveAs("{0}_compareShapes.png".format(x))
     #can.SetLogy()
     #can.SaveAs("{0}_compareShapes.png".format(x))
