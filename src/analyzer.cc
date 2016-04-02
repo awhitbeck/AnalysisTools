@@ -49,23 +49,30 @@ public :
   ~analyzer(){};
 
   // push processor into list
-  void addProcessor( processor<TreeType>* p ){
+  void addProcessor( processor<TreeType>* p , int index = -1 ){
     //cout << "analyzer::addProcessor - processor: " << p << endl;
     //cout << "module name: " << p->moduleName << endl;
-    
-    unsigned int ithProcessor = 0 ;
-    //cout << "- - - - - - " << endl;
-    for( ; ithProcessor < processorList->size() ; ithProcessor++ ){
-      //cout << processorList->at(ithProcessor) << endl;
-      if( processorList->at(ithProcessor) == 0 ) break; 
-    }
 
-    if( ithProcessor >= processorList->size() ){
-      //cout << "push_back processor" << endl;
-      processorList->push_back( p ) ;
-    }else{
-      //cout << "assign processor" << endl;
-      processorList->at(ithProcessor) = p;
+    if( index >=0 && index ){
+      if( index < processorList->size() ){
+	std::cout << "ERROR: analyzer::addProcessor - INDEX INVALID" << std::endl;
+      }   
+      processorList->insert(processorList->begin()+index,p);
+    }else{    
+      unsigned int ithProcessor = 0 ;
+      //cout << "- - - - - - " << endl;
+      for( ; ithProcessor < processorList->size() ; ithProcessor++ ){
+	//cout << processorList->at(ithProcessor) << endl;
+	if( processorList->at(ithProcessor) == 0 ) break; 
+      }
+      
+      if( ithProcessor >= processorList->size() ){
+	//cout << "push_back processor" << endl;
+	processorList->push_back( p ) ;
+      }else{
+	//cout << "assign processor" << endl;
+	processorList->at(ithProcessor) = p;
+      }
     }
 
   };
