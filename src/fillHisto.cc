@@ -2,7 +2,7 @@
 #define FILLHISTO
 
 #include "filler.h"
-#include "weightProducer.cc"
+#include "RA2bUtils/src/weightProducer.cc"
 #include <iostream>
 #include <string>
 #include <cassert>

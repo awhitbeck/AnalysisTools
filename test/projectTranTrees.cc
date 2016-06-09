@@ -49,13 +49,13 @@ int main(int argc, char** argv){
     cout << "================== NOTE: ================" << endl;
     cout << "I guess this is background ... " << endl;
     compressed=false;
-    //t->Add("root://cmsxrootd.fnal.gov///store/user/ntran/SUSY/theory_JPM/samples-uncompressed/ProcJPM_"+sample+"-test.root");
-    t->Add("/uscmst1b_scratch/lpc1/3DayLifetime/ntran/SUSY/forAndrew/backgrounds-v7-noDPhi-unc/ProcJPM_"+sample+"-test.root");
+    t->Add("root://cmsxrootd.fnal.gov///store/user/ntran/SUSY/theory_JPM/samples-uncompressed/ProcJPM_"+sample+"-test.root");
+    //t->Add("/uscmst1b_scratch/lpc1/3DayLifetime/ntran/SUSY/forAndrew/backgrounds-v7-noDPhi-unc/ProcJPM_"+sample+"-test.root");
   }
 
   tranTree *ntuple = new tranTree(t);
 
-  selectBaseline<tranTree> *select = new selectBaseline<tranTree>(ntuple,16);
+  selectBaseline<tranTree> *select = new selectBaseline<tranTree>(ntuple);
   //filterHighWeights<tranTree> *weightFilter = new filterHighWeights<tranTree>(ntuple);
   
   analyzer<tranTree> a(ntuple,17);

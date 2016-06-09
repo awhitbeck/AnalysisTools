@@ -32,6 +32,10 @@ public :
     cutMask = cutMask_;
   };
   
+  void postProcess( ) override {
+    histo->Write();
+  };
+  
   bool process( ) override {
     
     /*
@@ -63,7 +67,7 @@ public :
       //cout << "NLeptons cut failed" << endl;
       return false;
     }
-    if( ntuple->dPhi>0.5 || static_cast<bool>(cutMask&16) ) histo->Fill(5);
+    if( ntuple->dPhi>0.4 || static_cast<bool>(cutMask&16) ) histo->Fill(5);
     else{
       //cout << "dPhi cut failed" << endl;
       return false;

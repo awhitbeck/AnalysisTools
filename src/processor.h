@@ -1,6 +1,8 @@
 #ifndef PROCESSOR
 #define PROCESSOR
 
+#include "TString.h"
+
 template <class TreeType> class processor {
 
 public : 
