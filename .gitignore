@@ -1,5 +1,7 @@
 *~
 */*.png
+*/*.pdf
+*/*.eps
 */*.exe
 */*.stdout
 */*.stderr
